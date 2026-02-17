@@ -1,0 +1,6 @@
+name: ${COMPOSE_PROJECT_NAME}
+
+include:
+  - docker-compose.base.yml
+  - docker-compose.gateway.yml
+  - docker-compose.monitor.yml
