@@ -1,0 +1,32 @@
+services:
+  redis:
+    container_name: ${REDIS_CONTAINER_NAME}
+    image: ${REDIS_IMAGE}:${REDIS_IMAGE_VERSION}
+    ports:
+      - "${REDIS_HOST_PORT}:${REDIS_CONT_PORT}"
+    volumes:
+      - ${REDIS_HOST_PATH_CONFIG}:${REDIS_CONT_PATH_CONFIG}
+      - ${REDIS_HOST_PATH_DATA}:${REDIS_CONT_PATH_DATA}
+    command: ${REDIS_COMMAND}
+    privileged: true
+    restart: unless-stopped
+    networks:
+      - app-network
+  rabbitmq:
+    container_name: ${RABBITMQ_CONTAINER_NAME}
+    image: ${RABBITMQ_IMAGE}:${RABBITMQ_IMAGE_VERSION}
+    ports:
+      - "${RABBITMQ_HOST_PORT}:${RABBITMQ_CONT_PORT}"
+      - "${RABBITMQ_HOST_MGMT_PORT}:${RABBITMQ_CONT_MGMT_PORT}"
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+    volumes:
+      - ${RABBITMQ_HOST_PATH_DATA}:${RABBITMQ_CONT_PATH_DATA}
+    restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
