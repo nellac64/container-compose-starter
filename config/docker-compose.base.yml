@@ -26,6 +26,19 @@ services:
     restart: unless-stopped
     networks:
       - app-network
+  mysql:
+    container_name: ${MYSQL_CONTAINER_NAME}
+    image: ${MYSQL_IMAGE}:${MYSQL_IMAGE_VERSION}
+    ports:
+      - "${MYSQL_HOST_PORT}:${MYSQL_CONT_PORT}"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ${MYSQL_HOST_PATH_CONFIG}:${MYSQL_CONT_PATH_CONFIG}
+      - ${MYSQL_HOST_PATH_DATA}:${MYSQL_CONT_PATH_DATA}
+    restart: unless-stopped
+    networks:
+      - app-network
 
 networks:
   app-network:
