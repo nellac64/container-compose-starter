@@ -1,0 +1,16 @@
+services:
+  prometheus:
+    container_name: ${PROMETHEUS_CONTAINER_NAME}
+    image: ${PROMETHEUS_IMAGE_NAME}:${PROMETHEUS_IMAGE_VERSION}
+    ports:
+      - "${PROMETHEUS_HOST_PORT}:${PROMETHEUS_CONT_PORT}"
+    volumes:
+      - ${PROMETHEUS_HOST_CONFIG_PATH}:${PROMETHEUS_CONT_CONFIG_PATH}
+      - ${PROMETHEUS_HOST_DATA_PATH}:/${PROMETHEUS_CONT_DATA_PATH}
+    restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
