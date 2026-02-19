@@ -50,6 +50,17 @@ services:
     restart: unless-stopped
     networks:
       - app-network
+  sentinel:
+    container_name: ${SENTINEL_CONTAINER_NAME}
+    image: ${SENTINEL_IMAGE}:${SENTINEL_IMAGE_VERSION}
+    ports:
+      - "${SENTINEL_HOST_PORT}:${SENTINEL_CONT_PORT}"
+      - "${SENTINEL_HOST_CLIENT_PORT}:${SENTINEL_CONT_CLIENT_PORT}"
+    restart: unless-stopped
+    networks:
+      - app-network
+    depends_on:
+      - nacos
 
 networks:
   app-network:
