@@ -39,6 +39,17 @@ services:
     restart: unless-stopped
     networks:
       - app-network
+  nacos:
+    container_name: ${NACOS_CONTAINER_NAME}
+    image: ${NACOS_IMAGE}:${NACOS_IMAGE_VERSION}
+    ports:
+      - "${NACOS_HOST_PORT}:${NACOS_CONT_PORT}"
+      - "${NACOS_HOST_GRPC_PORT}:${NACOS_CONT_GRPC_PORT}"
+    environment:
+      - MODE=${NACOS_MODE}
+    restart: unless-stopped
+    networks:
+      - app-network
 
 networks:
   app-network:
