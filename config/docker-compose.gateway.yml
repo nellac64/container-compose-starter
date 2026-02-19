@@ -1,0 +1,23 @@
+services:
+  nginx:
+    container_name: ${NGINX_CONTAINER_NAME}
+    image: ${NGINX_IMAGE}:${NGINX_IMAGE_VERSION}
+    ports:
+      - "${NGINX_HOST_HTTP_PORT}:${NGINX_CONT_HTTP_PORT}"
+      - "${NGINX_HOST_HTTPS_PORT}:${NGINX_CONT_HTTPS_PORT}"
+    volumes:
+      - ${NGINX_HOST_HTML_PATH}:${NGINX_CONT_HTML_PATH}
+      - ${NGINX_HOST_CONF_PATH}:${NGINX_CONT_CONF_PATH}
+      - ${NGINX_HOST_CONF_D_PATH}:${NGINX_CONT_CONF_D_PATH}
+      - ${NGINX_HOST_LOGS_PATH}:${NGINX_CONT_LOGS_PATH}
+      - ${NGINX_HOST_SSL_PATH}:${NGINX_CONT_SSL_PATH}
+    restart: unless-stopped
+    networks:
+      - app-network
+    depends_on:
+      - redis
+      - mysql
+
+networks:
+  app-network:
+    driver: bridge
