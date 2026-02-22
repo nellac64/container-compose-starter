@@ -10,6 +10,15 @@ services:
     restart: unless-stopped
     networks:
       - app-network
+  pushgateway:
+    container_name: ${PUSHGATEWAY_CONTAINER_NAME}
+    image: ${PUSHGATEWAY_IMAGE_NAME}:${PUSHGATEWAY_IMAGE_VERSION}
+    ports:
+      - "${PUSHGATEWAY_HOST_PORT}:${PUSHGATEWAY_CONT_PORT}"
+    volumes:
+      - ${PUSHGATEWAY_HOST_DATA_PATH}:${PUSHGATEWAY_CONT_DATA_PATH}
+    command:
+      - --persistence.file=/prometheus/pushgateway_metrics.db
 
 networks:
   app-network:

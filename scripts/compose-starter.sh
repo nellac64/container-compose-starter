@@ -1,18 +1,11 @@
 #!/bin/bash
 
-LOG_FILE="/var/log/apps/docker_starter/starter.log"
+source ./common.sh
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="${SCRIPT_DIR}/../config"
 COMPOSE_CONFIG_DIR="/app/compose/config"
 COMPOSE_CONFIG_MAIN_FILE="/app/compose/config/docker-compose.yml"
-
-# 打印日志
-log() {
-    local msg="$1"
-    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-    echo "[$timestamp] $msg" >> "$LOG_FILE"
-}
 
 # copy_compose_config 拷贝 compose 配置文件
 copy_compose_config() {
