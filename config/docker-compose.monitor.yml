@@ -54,7 +54,21 @@ services:
     restart: unless-stopped
     networks:
       - app-network
-
+  cadvisor:
+    container_name: ${CADVISOR_CONTAINER_NAME}
+    image: ${CADVISOR_IMAGE_NAME}:${CADVISOR_IMAGE_VERSION}
+    ports:
+      - "${CADVISOR_HOST_PORT}:${CADVISOR_CONT_PORT}"
+    volumes:
+      - ${CADVISOR_HOST_ROOT_PATH}:${CADVISOR_CONT_ROOT_PATH}:ro
+      - ${CADVISOR_HOST_RUN_PATH}:${CADVISOR_CONT_RUN_PATH}:ro
+      - ${CADVISOR_HOST_SYS_PATH}:${CADVISOR_CONT_SYS_PATH}:ro
+      - ${CADVISOR_HOST_DOCKER_PATH}:${CADVISOR_CONT_DOCKER_PATH}:ro
+      - ${CADVISOR_HOST_DISK_PATH}:${CADVISOR_CONT_DISK_PATH}:ro
+    privileged: true
+    restart: unless-stopped
+    networks:
+      - app-network
 networks:
   app-network:
     driver: bridge
