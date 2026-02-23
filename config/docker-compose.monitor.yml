@@ -34,6 +34,26 @@ services:
     restart: unless-stopped
     networks:
       - app-network
+  node_exporter:
+    container_name: ${EXPORTER_CONTAINER_NAME}
+    image: ${EXPORTER_IMAGE_NAME}:${EXPORTER_IMAGE_VERSION}
+    pid: host
+    ports:
+      - "${EXPORTER_HOST_PORT}:${EXPORTER_CONT_PORT}"
+    volumes:
+      - ${EXPORTER_HOST_ROOT_PATH}:${EXPORTER_CONT_ROOT_PATH}:ro
+      - ${EXPORTER_HOST_PROC_PATH}:${EXPORTER_CONT_PROC_PATH}:ro
+      - ${EXPORTER_HOST_SYS_PATH}:${EXPORTER_CONT_SYS_PATH}:ro
+      - ${EXPORTER_HOST_RUN_PATH}:${EXPORTER_CONT_RUN_PATH}:rw
+      - ${EXPORTER_HOST_MACHINE_ID_PATH}:${EXPORTER_CONT_MACHINE_ID_PATH}:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+      - '--collector.netclass.ignored-devices=^(veth.*|docker.*|br-.*)$$'
+    restart: unless-stopped
+    networks:
+      - app-network
 
 networks:
   app-network:
