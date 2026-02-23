@@ -19,6 +19,21 @@ services:
       - ${PUSHGATEWAY_HOST_DATA_PATH}:${PUSHGATEWAY_CONT_DATA_PATH}
     command:
       - --persistence.file=/prometheus/pushgateway_metrics.db
+    restart: unless-stopped
+    networks:
+      - app-network
+  grafana:
+    container_name: ${GRAFANA_CONTAINER_NAME}
+    image: ${GRAFANA_IMAGE_NAME}:${GRAFANA_IMAGE_VERSION}
+    ports:
+      - "${GRAFANA_HOST_PORT}:${GRAFANA_CONT_PORT}"
+    volumes:
+      - ${GRAFANA_HOST_DATA_PATH}:${GRAFANA_CONT_DATA_PATH}
+      - ${GRAFANA_HOST_CONFIG_PATH}:${GRAFANA_CONT_CONFIG_PATH}
+      - ${GRAFANA_HOST_LOG_PATH}:${GRAFANA_CONT_LOG_PATH}
+    restart: unless-stopped
+    networks:
+      - app-network
 
 networks:
   app-network:
