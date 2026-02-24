@@ -1,15 +1,9 @@
 #!/bin/bash
 
-source ./common.sh
-
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SERVICE_CONFIG_DIR="${SCRIPT_DIR}/../service-config"
 
-PROMETHEUS_PROJECT_DIR="${SERVICE_CONFIG_DIR}/prometheus"
-PROMETHEUS_PROJECT_CONFIG_FILE="${PROMETHEUS_PROJECT_DIR}/prometheus.yml"
-PROMETHEUS_DST_DIR="/app/prometheus/config"
-PROMETHEUS_DST_CONFIG_FILE="${PROMETHEUS_DST_DIR}/prometheus.yml"
-PROMETHEUS_DST_CONFIG_FILE_BAK="${PROMETHEUS_DST_DIR}/prometheus.yml.bak"
+source "${SCRIPT_DIR}/common.sh"
+source "${SCRIPT_DIR}/file-path-declare.sh"
 
 FUNC_SUCCESS=0
 
@@ -20,18 +14,6 @@ COPY_STATUS_SKIP=2
 ACTION=""
 ACTION_UPDATE="update"
 ACTION_ROLLBACK="rollback"
-
-declare -a SRC_PATHS=(
-    "${PROMETHEUS_PROJECT_CONFIG_FILE}"
-)
-
-declare -a DST_PATHS=(
-    "${PROMETHEUS_DST_CONFIG_FILE}"
-)
-
-declare -a BAK_PATHS=(
-    "${PROMETHEUS_DST_CONFIG_FILE_BAK}"
-)
 
 # parse_args 参数检查
 parse_args() {
@@ -125,7 +107,7 @@ update_all_files() {
 
         # 备份、拷贝均成功
         ((success++))
-        log "[INFO] success backup: ${dst} -> ${bak}, update: ${src} -> ${dst}"
+        log "[INFO] success backup: ${dst} -> ${bak}, success update: ${src} -> ${dst}"
     done
 
     log "[INFO] end update, success: ${success}, failed: ${failed}, skipped: ${skipped}"

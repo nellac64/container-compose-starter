@@ -1,10 +1,11 @@
 #!/bin/bash
 
-source ./common.sh
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_UPDATE_SH="${SCRIPT_DIR}/service-config-update.sh"
 COMPOSE_STARTER_SH="${SCRIPT_DIR}/compose-starter.sh"
+
+source "${SCRIPT_DIR}/common.sh"
 
 MODE_UPDATE_START="upstart"
 MODE_DIRECT_START="distart"
