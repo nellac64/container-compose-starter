@@ -38,8 +38,7 @@ services:
     container_name: ${EXPORTER_CONTAINER_NAME}
     image: ${EXPORTER_IMAGE_NAME}:${EXPORTER_IMAGE_VERSION}
     pid: host
-    ports:
-      - "${EXPORTER_HOST_PORT}:${EXPORTER_CONT_PORT}"
+    network_mode: host
     volumes:
       - ${EXPORTER_HOST_ROOT_PATH}:${EXPORTER_CONT_ROOT_PATH}:ro
       - ${EXPORTER_HOST_PROC_PATH}:${EXPORTER_CONT_PROC_PATH}:ro
@@ -52,8 +51,6 @@ services:
       - '--path.rootfs=/rootfs'
       - '--collector.netclass.ignored-devices=^(veth.*|docker.*|br-.*)$$'
     restart: unless-stopped
-    networks:
-      - app-network
   cadvisor:
     container_name: ${CADVISOR_CONTAINER_NAME}
     image: ${CADVISOR_IMAGE_NAME}:${CADVISOR_IMAGE_VERSION}

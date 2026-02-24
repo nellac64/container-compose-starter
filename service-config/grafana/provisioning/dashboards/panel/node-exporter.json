@@ -1,0 +1,166 @@
+{
+    "id": null,
+    "uid": "node-exporter-simple",
+    "title": "Node Exporter - Simple Metrics",
+    "tags": ["node", "prometheus", "linux"],
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "30s",
+    "time": {
+        "from": "now-1h",
+        "to": "now"
+    },
+    "panels": [
+        {
+            "id": 1,
+            "title": "CPU Total Usage (%)",
+            "type": "timeseries",
+            "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+            "datasource": { "type": "prometheus", "uid": null },
+            "targets": [
+                {
+                    "expr": "100 - (avg by(instance) (irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+                    "legendFormat": "{{instance}} - Total CPU",
+                    "refId": "A"
+                }
+            ],
+            "fieldConfig": {
+                "defaults": {
+                    "unit": "percent",
+                    "min": 0,
+                    "max": 100,
+                    "thresholds": {
+                        "steps": [
+                            { "color": "green", "value": null },
+                            { "color": "yellow", "value": 70 },
+                            { "color": "red", "value": 90 }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "id": 2,
+            "title": "CPU Usage per Core (%)",
+            "type": "timeseries",
+            "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+            "datasource": { "type": "prometheus", "uid": null },
+            "targets": [
+                {
+                    "expr": "100 - (irate(node_cpu_seconds_total{mode=\"idle\"}[5m]) * 100)",
+                    "legendFormat": "{{instance}} - Core {{cpu}}",
+                    "refId": "A"
+                }
+            ],
+            "fieldConfig": {
+                "defaults": {
+                    "unit": "percent",
+                    "min": 0,
+                    "max": 100
+                }
+            }
+        },
+        {
+            "id": 3,
+            "title": "Memory Usage",
+            "type": "timeseries",
+            "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+            "datasource": { "type": "prometheus", "uid": null },
+            "targets": [
+                {
+                    "expr": "node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes",
+                    "legendFormat": "{{instance}} - Used",
+                    "refId": "A"
+                },
+                {
+                    "expr": "node_memory_Cached_bytes",
+                    "legendFormat": "{{instance}} - Cached",
+                    "refId": "B"
+                },
+                {
+                    "expr": "node_memory_Buffers_bytes",
+                    "legendFormat": "{{instance}} - Buffers",
+                    "refId": "C"
+                },
+                {
+                    "expr": "node_memory_MemAvailable_bytes",
+                    "legendFormat": "{{instance}} - Available",
+                    "refId": "D"
+                }
+            ],
+            "fieldConfig": {
+                "defaults": {
+                    "unit": "bytes",
+                    "min": 0
+                }
+            },
+            "options": {
+                "tooltip": { "mode": "multi", "sort": "desc" },
+                "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true }
+            }
+        },
+        {
+            "id": 4,
+            "title": "Disk I/O (Read/Write)",
+            "type": "timeseries",
+            "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+            "datasource": { "type": "prometheus", "uid": null },
+            "targets": [
+                {
+                    "expr": "irate(node_disk_read_bytes_total[5m])",
+                    "legendFormat": "{{instance}} - {{device}} - Read",
+                    "refId": "A"
+                },
+                {
+                    "expr": "irate(node_disk_written_bytes_total[5m])",
+                    "legendFormat": "{{instance}} - {{device}} - Write",
+                    "refId": "B"
+                }
+            ],
+            "fieldConfig": {
+                "defaults": {
+                    "unit": "Bps"
+                }
+            }
+        },
+        {
+            "id": 5,
+            "title": "Network Receive (Recv)",
+            "type": "timeseries",
+            "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
+            "datasource": { "type": "prometheus", "uid": null },
+            "targets": [
+                {
+                    "expr": "irate(node_network_receive_bytes_total{device!~\"lo|veth.*|docker.*\"}[5m])",
+                    "legendFormat": "{{instance}} - {{device}}",
+                    "refId": "A"
+                }
+            ],
+            "fieldConfig": {
+                "defaults": {
+                    "unit": "Bps"
+                }
+            }
+        },
+        {
+            "id": 6,
+            "title": "Network Transmit (Trans)",
+            "type": "timeseries",
+            "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 },
+            "datasource": { "type": "prometheus", "uid": null },
+            "targets": [
+                {
+                    "expr": "irate(node_network_transmit_bytes_total{device!~\"lo|veth.*|docker.*\"}[5m])",
+                    "legendFormat": "{{instance}} - {{device}}",
+                    "refId": "A"
+                }
+            ],
+            "fieldConfig": {
+                "defaults": {
+                    "unit": "Bps"
+                }
+            }
+        }
+    ]
+}
