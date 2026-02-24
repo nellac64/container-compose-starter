@@ -1,0 +1,14 @@
+apiVersion: 1  # 【必须】固定为 1，表示配置文件格式版本
+
+providers:
+  # 每一个 "- name:" 代表一个“提供方”（即一个文件夹来源）
+  - name: 'Default'                # 1. 提供者名称 (仅在日志中显示，方便排查)
+    orgId: 1                       # 2. 组织 ID (多租户环境用，默认 1)
+    folder: ''                     # 3. 仪表盘文件夹名称 (空字符串表示放在 "General" 默认文件夹)
+    folderUid: ''                  # 4. 文件夹 UID (如果文件夹已存在且指定了 UID，填这里)
+    type: file                     # 5. 类型 (固定为 file，表示从本地文件加载)
+    disableDeletion: false         # 6. 禁止删除 (false=允许同步删除，true=只增不删)
+    updateIntervalSeconds: 30      # 7. 更新间隔 (秒)，Grafana 每隔多久扫描一次文件变化
+    allowUiUpdates: false          # 8. 允许 UI 修改 (true=用户在网页改后可保存，false=强制只读)
+    options:
+      path: /etc/grafana/provisioning/dashboards/panel  # 9. 核心！仪表盘 JSON 文件的存放路径
