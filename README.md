@@ -14,3 +14,6 @@ monitor：监控服务
 
 scripts：
 存放 docker-compose 启动脚本
+
+sevice-config:
+存放各个服务的配置文件
