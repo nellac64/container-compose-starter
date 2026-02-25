@@ -107,7 +107,6 @@ update_all_files() {
 
         # 备份、拷贝均成功
         ((success++))
-        log "[INFO] success backup: ${dst} -> ${bak}, success update: ${src} -> ${dst}"
     done
 
     log "[INFO] end update, success: ${success}, failed: ${failed}, skipped: ${skipped}"

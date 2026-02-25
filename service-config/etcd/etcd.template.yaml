@@ -1,0 +1,35 @@
+name: "${ETCD_NAME}"
+
+# 数据存储目录
+data-dir: "/etcd-data/data"
+
+# 预写式日志存储目录
+wal-dir: "/etcd-data/wal"
+
+# 集群成员之间通讯使用URL
+listen-peer-urls: "http://0.0.0.0:${ETCD_INNER_PORT}"
+
+# 集群提供给外部客户端访问的URL，即外部客户端必须通过指定的IP加端口访问etcd
+listen-client-urls: "http://0.0.0.0:${ETCD_OUTER_PORT}"
+
+# 集群配置
+initial-advertise-peer-urls: "http://${ETCD_IP}:${ETCD_INNER_PORT}"
+
+# 集群初始成员配置，是etcd静态部署的核心初始化配置，它说明了当前集群由哪些URLs组成
+initial-cluster: "${CLUSTER_STR}"
+
+# 初始化集群状态（new 或 existing）
+initial-cluster-state: "new"
+
+# 引导期间etcd集群的初始集群令牌，防止不同集群之间产生交互
+initial-cluster-token: "etcd-cluster"
+
+# 向客户端发布的服务端点
+advertise-client-urls: "http://${ETCD_IP}:${ETCD_OUTER_PORT}"
+
+# 配置日志级别，仅支持 debug, info, warn, error, panic, or fatal
+log-level: "warn"
+
+# 日志输出目标
+log-outputs:
+  - "stderr"
