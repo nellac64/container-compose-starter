@@ -5,8 +5,14 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="${SCRIPT_DIR}/../config"
 COMPOSE_CONFIG_DIR="/app/compose/config"
 COMPOSE_CONFIG_MAIN_FILE="/app/compose/config/docker-compose.yml"
+COMPOSE_CONFIG_PRELOAD_SCRIPT="${SCRIPT_DIR}/compose-config-preload.sh"
 
 source "${SCRIPT_DIR}/common.sh"
+
+# preload_compose_config 预修改 compose 配置文件
+preload_compose_config() {
+    ${COMPOSE_CONFIG_PRELOAD_SCRIPT}
+}
 
 # copy_compose_config 拷贝 compose 配置文件
 copy_compose_config() {
@@ -61,6 +67,9 @@ start_docker_compose() {
 }
 
 main() {
+    # 预修改 docker compose 配置文件
+    preload_compose_config
+
     # 拷贝 docker compose 配置文件
     copy_compose_config
 

@@ -47,6 +47,10 @@ services:
       - "${NACOS_HOST_GRPC_PORT}:${NACOS_CONT_GRPC_PORT}"
     environment:
       - MODE=${NACOS_MODE}
+    volumes:
+      - ${NACOS_HOST_CONF_PATH}:${NACOS_CONT_CONF_PATH}
+      - ${NACOS_HOST_DATA_PATH}:${NACOS_CONT_DATA_PATH}
+      - ${NACOS_HOST_LOGS_PATH}:${NACOS_CONT_LOGS_PATH}
     restart: unless-stopped
     networks:
       - app-network
@@ -61,6 +65,45 @@ services:
       - app-network
     depends_on:
       - nacos
+  etcd-host-0:
+    container_name: ${ETCD0_CONTAINER_NAME}
+    image: ${ETCD0_IMAGE_NAME}:${ETCD0_IMAGE_VERSION}
+    network_mode: host
+    volumes:
+      - ${ETCD0_HOST_CONFIG_PATH}:${ETCD0_CONT_CONFIG_PATH}
+      - ${ETCD0_HOST_DATA_PATH}:${ETCD0_CONT_DATA_PATH}
+    entrypoint:
+      - '${ETCD0_CONT_BINARY_BATH}'
+    command:
+      - '--config-file'
+      - '${ETCD0_CONT_CONFIG_PATH}'
+    restart: unless-stopped
+  etcd-host-1:
+    container_name: ${ETCD1_CONTAINER_NAME}
+    image: ${ETCD1_IMAGE_NAME}:${ETCD1_IMAGE_VERSION}
+    network_mode: host
+    volumes:
+      - ${ETCD1_HOST_CONFIG_PATH}:${ETCD1_CONT_CONFIG_PATH}
+      - ${ETCD1_HOST_DATA_PATH}:${ETCD1_CONT_DATA_PATH}
+    entrypoint:
+      - '${ETCD1_CONT_BINARY_BATH}'
+    command:
+      - '--config-file'
+      - '${ETCD1_CONT_CONFIG_PATH}'
+    restart: unless-stopped
+  etcd-host-2:
+    container_name: ${ETCD2_CONTAINER_NAME}
+    image: ${ETCD2_IMAGE_NAME}:${ETCD2_IMAGE_VERSION}
+    network_mode: host
+    volumes:
+      - ${ETCD2_HOST_CONFIG_PATH}:${ETCD2_CONT_CONFIG_PATH}
+      - ${ETCD2_HOST_DATA_PATH}:${ETCD2_CONT_DATA_PATH}
+    entrypoint:
+      - '${ETCD2_CONT_BINARY_BATH}'
+    command:
+      - '--config-file'
+      - '${ETCD2_CONT_CONFIG_PATH}'
+    restart: unless-stopped
 
 networks:
   app-network:
