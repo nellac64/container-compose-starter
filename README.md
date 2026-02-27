@@ -17,3 +17,11 @@ scripts：
 
 sevice-config:
 存放各个服务的配置文件
+
+## 整体流程
+
+修改服务配置文件、环境路径替换
+
+修改 compose 配置文件、环境路径替换
+
+docker compose 启动容器
