@@ -36,7 +36,7 @@ scrape_configs:
   # node-exporter 节点数据监控
   - job_name: "node-exporter"
     static_configs:
-      - targets: ["192.168.86.151:9100"]
+      - targets: ["${NODE_IP}:9100"]
         labels:
           app: "node-exporter"
 
@@ -49,7 +49,7 @@ scrape_configs:
     metrics_path: /metrics
     scheme: http
     static_configs:
-      - targets: ["192.168.86.151:9091"]
+      - targets: ["${NODE_IP}:9091"]
 
   # windows-task test for own exporter
   - job_name: "windows-task"
