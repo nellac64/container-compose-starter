@@ -49,6 +49,24 @@ ETCD_DST_CONFIG_0_BAK="${ETCD_DST_DIR}/etcd0/conf/etcd0.yaml.bak"
 ETCD_DST_CONFIG_1_BAK="${ETCD_DST_DIR}/etcd1/conf/etcd1.yaml.bak"
 ETCD_DST_CONFIG_2_BAK="${ETCD_DST_DIR}/etcd2/conf/etcd2.yaml.bak"
 
+# local service dir list
+TEST_GIT_DIR="/app/test-git-service"
+TEST_GIT_DIR_LOG="${TEST_GIT_DIR}/log"
+TEST_GIT_DIR_CONFIG="${TEST_GIT_DIR}/config"
+TEST_GIT_DIR_DATA="${TEST_GIT_DIR}/data"
+
+TEST_GIT_PROJECT_DIR="${SERVICE_CONFIG_DIR}/test-service"
+TEST_GIT_PROJECT_CONFIG_FILE="${TEST_GIT_PROJECT_DIR}/test-service.yml"
+TEST_GIT_DST_CONFIG_FILE="${TEST_GIT_DIR_CONFIG}/test-service.yml"
+TEST_GIT_DST_CONFIG_FILE_BAK="${TEST_GIT_DIR_CONFIG}/test-service.yml.bak"
+
+
+declare -a LOCAL_SERVICE_BASE_PATHS=(
+    "${TEST_GIT_DIR_LOG}"
+    "${TEST_GIT_DIR_CONFIG}"
+    "${TEST_GIT_DIR_DATA}"
+)
+
 declare -a SRC_PATHS=(
     "${PROMETHEUS_PROJECT_CONFIG_FILE}"
     "${GRAFANA_PROJECT_DATASOURCE_DIR}"
@@ -58,6 +76,7 @@ declare -a SRC_PATHS=(
     "${ETCD_PROJECT_CONFIG_0}"
     "${ETCD_PROJECT_CONFIG_1}"
     "${ETCD_PROJECT_CONFIG_2}"
+    "${TEST_GIT_PROJECT_CONFIG_FILE}"
 )
 
 declare -a DST_PATHS=(
@@ -69,6 +88,7 @@ declare -a DST_PATHS=(
     "${ETCD_DST_CONFIG_0}"
     "${ETCD_DST_CONFIG_1}"
     "${ETCD_DST_CONFIG_2}"
+    "${TEST_GIT_DST_CONFIG_FILE}"
 )
 
 declare -a BAK_PATHS=(
@@ -80,4 +100,5 @@ declare -a BAK_PATHS=(
     "${ETCD_DST_CONFIG_0_BAK}"
     "${ETCD_DST_CONFIG_1_BAK}"
     "${ETCD_DST_CONFIG_2_BAK}"
+    "${TEST_GIT_DST_CONFIG_FILE_BAK}"
 )

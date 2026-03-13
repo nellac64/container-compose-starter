@@ -1,0 +1,3 @@
+config-dir: "/app/test-git-service/config"
+log-dir: "/app/test-git-service/log"
+data-dir: "/app/test-git-service/data"

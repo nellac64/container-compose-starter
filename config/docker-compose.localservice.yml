@@ -1,0 +1,13 @@
+services:
+  test-git-service:
+    container_name: ${TEST_GIT_SERVICE_CONTAINER_NAME}
+    image: ${TEST_GIT_SERVICE_IMAGE_NAME}:${TEST_GIT_SERVICE_IMAGE_VERSION}
+    ports:
+      - "${TEST_GIT_SERVICE_HOST_OUTER_PORT}:${TEST_GIT_SERVICE_CONT_OUTER_PORT}"
+    volumes:
+      - ${TEST_GIT_SERVICE_HOST_CONF_PATH}:${TEST_GIT_SERVICE_CONT_CONF_PATH}
+      - ${TEST_GIT_SERVICE_HOST_DATA_PATH}:${TEST_GIT_SERVICE_CONT_DATA_PATH}
+      - ${TEST_GIT_SERVICE_HOST_LOGS_PATH}:${TEST_GIT_SERVICE_CONT_LOGS_PATH}
+    restart: unless-stopped
+    networks:
+      - app-network
