@@ -43,6 +43,25 @@ check_arrays_length() {
     return ${FUNC_SUCCESS}
 }
 
+# create_service_dirs 创建需要的数据路径、日志路径、配置路径
+create_service_dirs() {
+    local dir_count=${#LOCAL_SERVICE_BASE_PATHS[@]}
+
+    log "[INFO] start create_service_dirs"
+    for (( i = 0; i < dir_count; i++ )); do
+        local dir_need_create="${LOCAL_SERVICE_BASE_PATHS[$i]}"
+        if [[ ! -d "${dir_need_create}" ]]; then
+            log "[INFO] need create: ${dir_need_create}"
+            mkdir -p "${dir_need_create}"
+        fi
+
+        # TODO 服务 用户 权限定义
+        chmod 777 "${dir_need_create}"
+    done
+    log "[INFO] ended create_service_dirs"
+    return 0
+}
+
 # copy_file 拷贝替换文件
 copy_file() {
     local src="$1"
@@ -79,6 +98,8 @@ update_all_files() {
     local skipped=0
 
     log "[INFO] start update_all_files"
+
+    create_service_dirs
 
     for (( i = 0; i < count; i++ )); do
         local src="${SRC_PATHS[$i]}"

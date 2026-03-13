@@ -1,0 +1,13 @@
+services:
+  local-api-gateway:
+    container_name: ${LOCAL_API_GATEWAY_CONTAINER_NAME}
+    image: ${LOCAL_API_GATEWAY_IMAGE_NAME}:${LOCAL_API_GATEWAY_IMAGE_VERSION}
+    ports:
+      - "${LOCAL_API_GATEWAY_HOST_OUTER_PORT}:${LOCAL_API_GATEWAY_CONT_OUTER_PORT}"
+    volumes:
+      - ${LOCAL_API_GATEWAY_HOST_CONF_PATH}:${LOCAL_API_GATEWAY_CONT_CONF_PATH}
+      - ${LOCAL_API_GATEWAY_HOST_DATA_PATH}:${LOCAL_API_GATEWAY_CONT_DATA_PATH}
+      - ${LOCAL_API_GATEWAY_HOST_LOGS_PATH}:${LOCAL_API_GATEWAY_CONT_LOGS_PATH}
+    restart: unless-stopped
+    networks:
+      - app-network

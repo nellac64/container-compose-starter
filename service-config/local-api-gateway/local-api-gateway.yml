@@ -1,0 +1,3 @@
+config-dir: "/app/local-api-gateway/config"
+log-dir: "/app/local-api-gateway/log"
+data-dir: "/app/local-api-gateway/data"
