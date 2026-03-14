@@ -11,6 +11,8 @@ IMAGES_DIR="${SCRIPT_DIR}/../images"
 
 source "${SCRIPT_DIR}/common.sh"
 
+DOCKER_COMPOSE_CMD=$(get_compose_command)
+
 # preload_compose_config 预修改 compose 配置文件
 preload_compose_config() {
     ${COMPOSE_CONFIG_PRELOAD_SCRIPT}
@@ -100,7 +102,7 @@ start_docker_compose() {
         log "ERROR: Compose file not found"
         exit 1
     fi
-    docker-compose -f "${COMPOSE_CONFIG_MAIN_FILE}" up -d
+    $DOCKER_COMPOSE_CMD -f "${COMPOSE_CONFIG_MAIN_FILE}" up -d
 }
 
 main() {

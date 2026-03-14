@@ -1,0 +1,85 @@
+#!/bin/bash
+
+declare -a DEPEND_IMAGE_NAME_PARAM=(
+    "REDIS_IMAGE"
+    "RABBITMQ_IMAGE"
+    "MYSQL_IMAGE"
+    "NGINX_IMAGE"
+    "NACOS_IMAGE"
+    "SENTINEL_IMAGE"
+    "PROMETHEUS_IMAGE_NAME"
+    "PUSHGATEWAY_IMAGE_NAME"
+    "GRAFANA_IMAGE_NAME"
+    "EXPORTER_IMAGE_NAME"
+    "CADVISOR_IMAGE_NAME"
+    "ETCD0_IMAGE_NAME"
+    "ETCD1_IMAGE_NAME"
+    "ETCD2_IMAGE_NAME"
+)
+
+declare -a DEPEND_IMAGE_VERSION_PARAM=(
+    "REDIS_IMAGE_VERSION"
+    "RABBITMQ_IMAGE_VERSION"
+    "MYSQL_IMAGE_VERSION"
+    "NGINX_IMAGE_VERSION"
+    "NACOS_IMAGE_VERSION"
+    "SENTINEL_IMAGE_VERSION"
+    "PROMETHEUS_IMAGE_VERSION"
+    "PUSHGATEWAY_IMAGE_VERSION"
+    "GRAFANA_IMAGE_VERSION"
+    "EXPORTER_IMAGE_VERSION"
+    "CADVISOR_IMAGE_VERSION"
+    "ETCD0_IMAGE_VERSION"
+    "ETCD1_IMAGE_VERSION"
+    "ETCD2_IMAGE_VERSION"
+)
+
+declare -a DEPEND_IMAGE_NAME=(
+    "docker.1ms.run/redis"
+    "docker.1ms.run/library/rabbitmq"
+    "docker.1ms.run/mysql/mysql-server"
+    "docker.1ms.run/library/nginx"
+    "docker.1ms.run/nacos/nacos-server"
+    "docker.1ms.run/bladex/sentinel-dashboard"
+    "docker.1ms.run/prom/prometheus"
+    "docker.1ms.run/prom/pushgateway"
+    "docker.1ms.run/grafana/grafana"
+    "docker.1ms.run/prom/node-exporter"
+    "gcr.io/cadvisor/cadvisor"
+    "quay.io/coreos/etcd"
+    "quay.io/coreos/etcd"
+    "quay.io/coreos/etcd"
+)
+
+declare -a DEPEND_IMAGE_VERSION=(
+    "6.0.8"
+    "3.13-management-alpine"
+    "5.7"
+    "stable-alpine3.23"
+    "v2.4.3"
+    "1.8.6"
+    "v3.5.1"
+    "v1.11.2"
+    "10.2.9"
+    "v1.10.2"
+    "v0.49.1"
+    "v3.5.12"
+    "v3.5.12"
+    "v3.5.12"
+)
+
+declare -a LOCAL_IMAGE_NAME_PARAM=(
+    ""
+)
+
+declare -a LOCAL_IMAGE_VERSION_PARAM=(
+    ""
+)
+
+declare -a LOCAL_IMAGE_NAME=(
+    ""
+)
+
+declare -a LOCAL_IMAGE_VERSION=(
+    ""
+)

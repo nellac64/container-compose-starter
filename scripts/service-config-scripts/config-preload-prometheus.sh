@@ -26,13 +26,21 @@ create_single_prometheus_config() {
     return 0
 }
 
+# change_chmod_prometheus_data_dir 修改数据路径权限
+change_chmod_prometheus_data_dir() {
+    # TODO 后续确认属主属组权限
+    chmod 777 /app/prometheus/data/prometheus
+}
+
 main() {
     log "[INFO] enter preload config prometheus"
 
-    # 使用 ens33 网口 IP
-    local hostip=$(ip addr show ens33 | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1)
+    local using_eth_name=$(get_host_ip)
+    local host_ip=$(ip addr show "${using_eth_name}" | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1)
 
-    create_single_prometheus_config "${hostip}"
+    create_single_prometheus_config "${host_ip}"
+
+    change_chmod_prometheus_data_dir
 
     log "[INFO] ended preload config prometheus"
 }

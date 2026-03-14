@@ -46,7 +46,8 @@ main() {
     log "[INFO] enter preload config etcd"
 
     # 使用 ens33 网口 IP
-    local hostip=$(ip addr show ens33 | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1)
+    local using_eth_name=$(get_host_ip)
+    local host_ip=$(ip addr show "${using_eth_name}" | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1)
 
     # 生成完整的集群信息 cluster str
     local initial_cluster_str=""
@@ -56,14 +57,14 @@ main() {
             # 添加间隔
             initial_cluster_str="${initial_cluster_str},"
         fi
-        initial_cluster_str="${initial_cluster_str}${node}=http://${hostip}:${port}"
+        initial_cluster_str="${initial_cluster_str}${node}=http://${host_ip}:${port}"
     done
     log "[INFO] create initial_cluster_str: ${initial_cluster_str}"
 
     # 遍历数组 生成配置
     for node in "${ALL_NODES[@]}"; do
         log "[INFO] exec create config: ${node}"
-        create_single_etcd_config "${node}" "${hostip}" "${initial_cluster_str}"
+        create_single_etcd_config "${node}" "${host_ip}" "${initial_cluster_str}"
     done
 
     log "[INFO] ended preload config etcd"
